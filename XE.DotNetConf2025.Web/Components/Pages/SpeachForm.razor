@@ -1,0 +1,44 @@
+﻿@page "/speach-form"
+@using XE.DotNetConf2025.Web.Models
+
+<h3>Speach Form</h3>
+
+<EditForm Model="Input" OnValidSubmit="SaveAsync">
+    <DataAnnotationsValidator />
+
+    <div>
+        <label for="title">Title</label>
+        <InputText id="title" class="form-control" @bind-Value="Input.Title" />
+        <ValidationMessage For="() => Input.Title" class="text-danger" />
+    </div>
+
+    <div>
+        <label for="abstract">Abstract</label>
+        <InputTextArea id="abstract" class="form-control" @bind-Value="Input.Abstract" />
+        <ValidationMessage For="() => Input.Abstract" class="text-danger" />
+    </div>
+
+    <div>
+        <label for="speakerName">Speaker Name</label>
+        <InputText id="speakerName" class="form-control" @bind-Value="Input.Speaker.Name" />
+        <ValidationMessage For="() => Input.Speaker.Name" class="text-danger" />
+    </div>
+
+    <div>
+        <label for="speakerEmail">Speaker Email</label>
+        <InputText id="speakerEmail" class="form-control" @bind-Value="Input.Speaker.Email" />
+        <ValidationMessage For="() => Input.Speaker.Email" class="text-danger" />
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Save</button>
+</EditForm>
+
+@code {
+
+    public Speach Input { get; set; } = new();
+
+    private Task SaveAsync()
+    {
+        return Task.CompletedTask;
+    }
+}

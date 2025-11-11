@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="XE.DotNetConf2025.ApiService/XE.DotNetConf2025.ApiService.csproj" />
+  <Project Path="XE.DotNetConf2025.AppHost/XE.DotNetConf2025.AppHost.csproj" />
+  <Project Path="XE.DotNetConf2025.ServiceDefaults/XE.DotNetConf2025.ServiceDefaults.csproj" />
+  <Project Path="XE.DotNetConf2025.Web/XE.DotNetConf2025.Web.csproj" />
+</Solution>
