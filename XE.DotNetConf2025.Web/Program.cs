@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using XE.DotNetConf2025.Models;
 using XE.DotNetConf2025.Web;
 using XE.DotNetConf2025.Web.Components;
 using XE.DotNetConf2025.Web.Components.Account;
 using XE.DotNetConf2025.Web.Data;
-using XE.DotNetConf2025.Models;
+using XE.DotNetConf2025.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,9 +15,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
 builder.AddRedisOutputCache("cache");
 
-// Add services to the container.
+
+builder.Services.AddScoped<WeatherStateService>();
+
 builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
+    .AddInteractiveServerComponents()
+    .RegisterPersistentService<WeatherStateService>(RenderMode.InteractiveServer);
 
 builder.Services.AddHttpClient<WeatherApiClient>(client =>
     {
@@ -33,8 +38,7 @@ builder.Services.AddAuthentication(options =>
 {
     options.DefaultScheme = IdentityConstants.ApplicationScheme;
     options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-})
-    .AddIdentityCookies();
+}).AddIdentityCookies();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>

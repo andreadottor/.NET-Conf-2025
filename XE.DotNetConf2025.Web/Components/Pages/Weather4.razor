@@ -1,12 +1,13 @@
-﻿@page "/weather"
+﻿@page "/weather4"
 
 @inject WeatherApiClient WeatherApi
+@inject WeatherStateService StateService
 
 <PageTitle>Weather</PageTitle>
 
-<h1>Weather 1</h1>
+<h1>Weather 4</h1>
 
-@if (forecasts == null)
+@if (StateService.Forecasts == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -22,7 +23,7 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var forecast in forecasts)
+            @foreach (var forecast in StateService.Forecasts)
             {
                 <tr>
                     <td>@forecast.Date.ToShortDateString()</td>
@@ -37,11 +38,9 @@ else
 
 @code {
 
-
-    public WeatherForecast[]? forecasts;
-
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await WeatherApi.GetWeatherAsync();
+        if (StateService.Forecasts is null)
+            StateService.Forecasts = await WeatherApi.GetWeatherAsync();
     }
 }

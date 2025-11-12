@@ -1,0 +1,65 @@
+﻿@page "/weather2"
+@implements IDisposable
+
+@inject WeatherApiClient WeatherApi
+@inject PersistentComponentState ApplicationState
+
+<PageTitle>Weather</PageTitle>
+
+<h1>Weather 2</h1>
+
+@if (Forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th aria-label="Temperature in Celsius">Temp. (C)</th>
+                <th aria-label="Temperature in Fahrenheit">Temp. (F)</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in Forecasts)
+            {
+                <tr>
+                    <td>@forecast.Date.ToShortDateString()</td>
+                    <td>@forecast.TemperatureC</td>
+                    <td>@forecast.TemperatureF</td>
+                    <td>@forecast.Summary</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    [PersistentState]
+    public WeatherForecast[]? Forecasts { get; set; }
+
+    private PersistingComponentStateSubscription? persistingSubscription;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!ApplicationState.TryTakeFromJson<WeatherForecast[]>(nameof(Forecasts), out var forecasts))
+        {
+            Forecasts = await WeatherApi.GetWeatherAsync();
+        }
+        else
+        {
+            Forecasts = forecasts;
+        }
+
+        persistingSubscription = ApplicationState.RegisterOnPersisting(() =>
+        {
+            ApplicationState.PersistAsJson(nameof(Forecasts), Forecasts);
+            return Task.CompletedTask;
+        });
+    }
+
+    public void Dispose() => persistingSubscription?.Dispose();
+}
