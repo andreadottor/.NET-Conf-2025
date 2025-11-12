@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -15,12 +16,21 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
 builder.AddRedisOutputCache("cache");
 
+builder.AddRedisDistributedCache(connectionName: "cache");
+builder.Services.AddHybridCache();
 
 builder.Services.AddScoped<WeatherStateService>();
 
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .RegisterPersistentService<WeatherStateService>(RenderMode.InteractiveServer);
+
+builder.Services.Configure<CircuitOptions>(options =>
+{
+    options.PersistedCircuitInMemoryRetentionPeriod = TimeSpan.FromHours(2);
+    options.PersistedCircuitDistributedRetentionPeriod = TimeSpan.FromHours(8);
+    options.PersistedCircuitInMemoryMaxRetained = 1000;
+});
 
 builder.Services.AddHttpClient<WeatherApiClient>(client =>
     {
