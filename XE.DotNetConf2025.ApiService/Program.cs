@@ -50,7 +50,8 @@ app.UseExceptionHandler();
 
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.MapOpenApi("openapi/v1.json");
+    app.MapOpenApi("openapi/v1.yaml");
     app.UseSwaggerUI(options => {
         options.SwaggerEndpoint("/openapi/v1.json", "API Service V1");
     });
