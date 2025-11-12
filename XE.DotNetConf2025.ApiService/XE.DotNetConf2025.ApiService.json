@@ -1,0 +1,206 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "XE.DotNetConf2025.ApiService | v1",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/": {
+      "get": {
+        "tags": [
+          "XE.DotNetConf2025.ApiService"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/weatherforecast": {
+      "get": {
+        "tags": [
+          "XE.DotNetConf2025.ApiService"
+        ],
+        "operationId": "GetWeatherForecast",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherForecast"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/speeches": {
+      "get": {
+        "tags": [
+          "SpeechesEnpoints"
+        ],
+        "summary": "Returns an HTTP 200 OK response containing a collection of available speeches.",
+        "responses": {
+          "200": {
+            "description": "An Ok&lt;TValue&gt; result containing an enumerable collection of Speech objects\r\n    representing the available speeches.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Speech"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "SpeechesEnpoints"
+        ],
+        "summary": "Creates a new speech resource and returns a result indicating that the resource has been created.",
+        "requestBody": {
+          "description": "The speech object to be created. Cannot be null.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Speech"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "A Created result containing the newly created speech resource and its location URI.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Speech"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Speaker": {
+        "required": [
+          "name",
+          "email"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 100,
+            "minLength": 2,
+            "type": [
+              "null",
+              "string"
+            ],
+            "description": "Gets or sets the name associated with the entity."
+          },
+          "email": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "description": "Gets or sets the email address associated with the user."
+          }
+        },
+        "description": "Represents a speaker with identifying information such as name and email address."
+      },
+      "Speech": {
+        "required": [
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "title": {
+            "maxLength": 200,
+            "minLength": 5,
+            "type": [
+              "null",
+              "string"
+            ],
+            "description": "Gets or sets the title of the item."
+          },
+          "abstract": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "description": "Gets or sets the abstract or summary text associated with the item."
+          },
+          "speaker": {
+            "description": "Gets or sets the speaker associated with the current context.",
+            "$ref": "#/components/schemas/Speaker"
+          }
+        },
+        "description": "Represents a conference session, including its title, abstract, and associated speaker."
+      },
+      "WeatherForecast": {
+        "required": [
+          "date",
+          "temperatureC",
+          "summary"
+        ],
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "temperatureC": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "summary": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "temperatureF": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "XE.DotNetConf2025.ApiService"
+    },
+    {
+      "name": "SpeechesEnpoints"
+    }
+  ]
+}

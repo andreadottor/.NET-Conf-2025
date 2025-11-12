@@ -5,6 +5,7 @@ using XE.DotNetConf2025.Web;
 using XE.DotNetConf2025.Web.Components;
 using XE.DotNetConf2025.Web.Components.Account;
 using XE.DotNetConf2025.Web.Data;
+using XE.DotNetConf2025.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,6 +52,7 @@ builder.Services.AddIdentityCore<ApplicationUser>(options =>
 
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
+builder.Services.AddValidationForTypesInModels();
 builder.Services.AddValidation();
 
 var app = builder.Build();

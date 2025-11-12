@@ -1,7 +1,6 @@
-﻿@page "/speach-form"
-@using XE.DotNetConf2025.Web.Models
+﻿@page "/speech-form"
 
-<h3>Speach Form</h3>
+<h3>Speech Form</h3>
 
 <EditForm Model="Input" OnValidSubmit="SaveAsync">
     <DataAnnotationsValidator />
@@ -35,7 +34,7 @@
 
 @code {
 
-    public Speach Input { get; set; } = new();
+    public Speech Input { get; set; } = new();
 
     private Task SaveAsync()
     {

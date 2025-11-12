@@ -8,6 +8,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\XE.DotNetConf2025.Models\XE.DotNetConf2025.Models.csproj" />
 		<ProjectReference Include="..\XE.DotNetConf2025.ServiceDefaults\XE.DotNetConf2025.ServiceDefaults.csproj" />
 	</ItemGroup>
 
