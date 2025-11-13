@@ -56,10 +56,9 @@ builder.Services.AddIdentityCore<ApplicationUser>(options =>
 {
     options.SignIn.RequireConfirmedAccount = true;
     options.Stores.SchemaVersion = IdentitySchemaVersions.Version3;
-})
-    .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddSignInManager()
-    .AddDefaultTokenProviders();
+}).AddEntityFrameworkStores<ApplicationDbContext>()
+  .AddSignInManager()
+  .AddDefaultTokenProviders();
 
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 

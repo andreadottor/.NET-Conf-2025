@@ -1,6 +1,7 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-var cache = builder.AddRedis("cache");
+var cache = builder.AddRedis("cache")
+                   .WithLifetime(ContainerLifetime.Persistent);
 
 var sql = builder.AddSqlServer("sql")
                  .WithDataVolume()

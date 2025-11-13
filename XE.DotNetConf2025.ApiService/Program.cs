@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.Extensions.Options;
 using System.Globalization;
+using System.Net.ServerSentEvents;
+using System.Runtime.CompilerServices;
 using XE.DotNetConf2025.ApiService.Endpoints;
 using XE.DotNetConf2025.Models;
 
@@ -72,6 +74,25 @@ app.MapGet("/weatherforecast", () =>
     return forecast;
 })
 .WithName("GetWeatherForecast");
+
+app.MapGet("sse-item", (CancellationToken cancellationToken) =>
+{
+    async IAsyncEnumerable<SseItem<int>> GetHeartRate([EnumeratorCancellation] CancellationToken cancellationToken)
+    {
+        while (!cancellationToken.IsCancellationRequested)
+        {
+            var heartRate = Random.Shared.Next(60, 100);
+            yield return new SseItem<int>(heartRate, eventType: "heartRate")
+            {
+                ReconnectionInterval = TimeSpan.FromMinutes(1)
+            };
+            await Task.Delay(2000, cancellationToken);
+        }
+    }
+
+    return TypedResults.ServerSentEvents(GetHeartRate(cancellationToken));
+})
+.WithName("GetHeartRate");
 
 app.MapSpeechesEnpoints();
 app.MapDefaultEndpoints();

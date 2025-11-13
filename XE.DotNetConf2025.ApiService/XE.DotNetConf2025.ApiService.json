@@ -47,6 +47,26 @@
         }
       }
     },
+    "/sse-item": {
+      "get": {
+        "tags": [
+          "XE.DotNetConf2025.ApiService"
+        ],
+        "operationId": "GetHeartRate",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/event-stream": {
+                "schema": {
+                  "$ref": "#/components/schemas/SseItemOfint"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/speeches": {
       "get": {
         "tags": [
@@ -55,7 +75,7 @@
         "summary": "Returns an HTTP 200 OK response containing a collection of available speeches.",
         "responses": {
           "200": {
-            "description": "An Ok&lt;TValue&gt; result containing an enumerable collection of Speech objects\r\n    representing the available speeches.",
+            "description": "An Ok&lt;TValue&gt; result containing an enumerable collection of Speech objects representing the available speeches.",
             "content": {
               "application/json": {
                 "schema": {
@@ -156,6 +176,38 @@
           }
         },
         "description": "Represents a conference session, including its title, abstract, and associated speaker."
+      },
+      "SseItemOfint": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "eventType": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "eventId": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "reconnectionInterval": {
+            "pattern": "^-?(\\d+\\.)?\\d{2}:\\d{2}:\\d{2}(\\.\\d{1,7})?$",
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
       },
       "WeatherForecast": {
         "required": [
