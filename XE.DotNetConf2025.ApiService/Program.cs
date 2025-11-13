@@ -25,10 +25,11 @@ builder.Services.AddProblemDetails(options =>
             if (namingPolicy is not null)
             {
                 validationProblem.Errors = validationProblem.Errors
-                    .ToDictionary(
-                        kvp => namingPolicy.ConvertName(kvp.Key),
-                        kvp => kvp.Value
-                    );
+                 .ToDictionary(
+                     kvp => string.Join(".", kvp.Key.Split('.').Select(segment => namingPolicy.ConvertName(segment))),
+                     kvp => kvp.Value
+                 );
+
             }
         }
 
