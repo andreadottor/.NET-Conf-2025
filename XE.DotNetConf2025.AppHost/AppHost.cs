@@ -1,6 +1,12 @@
+using Aspire.Hosting;
+using Microsoft.Extensions.Options;
+
 var builder = DistributedApplication.CreateBuilder(args);
 
-var cache = builder.AddRedis("cache")
+var redisPassword = builder.AddParameter("redisPassword", "abc123");
+
+var cache = builder.AddRedis("cache", 34872)
+                   .WithPassword(redisPassword)
                    .WithLifetime(ContainerLifetime.Persistent);
 
 var sql = builder.AddSqlServer("sql")
