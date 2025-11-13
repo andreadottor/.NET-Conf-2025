@@ -1,8 +1,6 @@
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.Extensions.Options;
 using System.Globalization;
-using System.Reflection;
 using XE.DotNetConf2025.ApiService.Endpoints;
 using XE.DotNetConf2025.Models;
 
@@ -79,9 +77,3 @@ app.MapSpeechesEnpoints();
 app.MapDefaultEndpoints();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
-

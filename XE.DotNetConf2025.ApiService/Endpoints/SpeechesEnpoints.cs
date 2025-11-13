@@ -11,6 +11,13 @@
     /// application's endpoint routing.</remarks>
     public static class SpeechesEnpoints
     {
+        /// <summary>
+        /// Configures endpoints for speech-related operations on the specified route builder.
+        /// </summary>
+        /// <remarks>This method maps GET and POST endpoints for the '/speeches' route. Use this extension
+        /// method to add speech API endpoints to your application's routing configuration.</remarks>
+        /// <param name="routes">The endpoint route builder to which the speech endpoints will be mapped. Cannot be null.</param>
+        /// <returns>The same <see cref="IEndpointRouteBuilder"/> instance provided in <paramref name="routes"/>, with speech endpoints mapped.</returns>
         public static IEndpointRouteBuilder MapSpeechesEnpoints(this IEndpointRouteBuilder routes)
         {
             routes.MapGet("/speeches", GetSpeeches);
@@ -21,8 +28,7 @@
         /// <summary>
         /// Returns an HTTP 200 OK response containing a collection of available speeches.
         /// </summary>
-        /// <returns>An <see cref="Ok{T}"/> result containing an enumerable collection of <see cref="Speech"/> objects
-        /// representing the available speeches.</returns>
+        /// <returns>An <see cref="Ok{T}"/> result containing an enumerable collection of <see cref="Speech"/> objects representing the available speeches.</returns>
         public static Ok<IEnumerable<Speech>> GetSpeeches()
         {
             return TypedResults.Ok<IEnumerable<Speech>>(new List<Speech>

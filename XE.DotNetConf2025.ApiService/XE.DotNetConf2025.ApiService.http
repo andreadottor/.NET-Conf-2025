@@ -1,6 +1,28 @@
-@ApiService_HostAddress = http://localhost:5505
+@ApiService_HostAddress = https://localhost:7558
 
 GET {{ApiService_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+
+GET {{ApiService_HostAddress}}/speeches
+Accept: application/json
+
+###
+
+
+POST {{ApiService_HostAddress}}/speeches
+Content-Type: application/json
+
+{
+  "title": "Novità in ASP.NET Core & Blazor",
+  "abstract": "In questa sessione vedremo le principali novità che .NET 10 porta per ASP.NET Core e Blazor.",
+  "speaker": {
+    "name": "Andrea Dottor",
+    "email": "andrea.dottor@dev.localhost"
+  }
+}
+
+###
+

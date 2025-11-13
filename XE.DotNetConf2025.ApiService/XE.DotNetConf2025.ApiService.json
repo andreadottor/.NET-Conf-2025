@@ -167,6 +167,7 @@
         "properties": {
           "date": {
             "type": "string",
+            "description": "The date for which the weather forecast applies.",
             "format": "date"
           },
           "temperatureC": {
@@ -175,13 +176,15 @@
               "integer",
               "string"
             ],
+            "description": "The forecasted temperature in degrees Celsius for the specified date.",
             "format": "int32"
           },
           "summary": {
             "type": [
               "null",
               "string"
-            ]
+            ],
+            "description": "A brief summary or description of the weather conditions for the specified date. Can be null if no summary is available."
           },
           "temperatureF": {
             "pattern": "^-?(?:0|[1-9]\\d*)$",
@@ -189,9 +192,11 @@
               "integer",
               "string"
             ],
+            "description": "Gets the temperature in degrees Fahrenheit, calculated from the Celsius value.",
             "format": "int32"
           }
-        }
+        },
+        "description": "Represents a weather forecast for a specific date, including temperature and summary information."
       }
     }
   },
