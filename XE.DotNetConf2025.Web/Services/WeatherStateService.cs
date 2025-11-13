@@ -5,6 +5,6 @@ using XE.DotNetConf2025.Models;
 
 public class WeatherStateService
 {
-    [PersistentState]
+    [PersistentState(AllowUpdates = true)]
     public IEnumerable<WeatherForecast>? Forecasts { get; set; }
 }
